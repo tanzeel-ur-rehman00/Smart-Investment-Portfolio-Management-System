@@ -9,7 +9,10 @@ from crypto import Crypto
 from realestate import RealEstate
 from bond import Bond
 from recursion_utils import find_best_investment
+import sys
+sys.path.append('path/to/numpy_utils')
 from numpy_utils import calculate_risk_and_return
+
 
 def main():
     print("Welcome to Smart Investment Portfolio Management System")
