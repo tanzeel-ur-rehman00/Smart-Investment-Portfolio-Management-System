@@ -9,8 +9,6 @@ from crypto import Crypto
 from realestate import RealEstate
 from bond import Bond
 from recursion_utils import find_best_investment
-import sys
-sys.path.append('path/to/numpy_utils')
 from numpy_utils import calculate_risk_and_return
 
 
@@ -68,6 +66,7 @@ def main():
                         amount = float(input("Amount invested: "))
                         rate = float(input("Annual return rate: "))
 
+                        inv = None
                         if t == "1":
                             vol = float(input("Volatility: "))
                             inv = Stock(name, amount, rate, vol)
@@ -84,23 +83,34 @@ def main():
                             loc = input("Property location: ")
                             inv = RealEstate(name, amount, rate, loc)
 
-                        else:
+                        elif t == "5":
                             yrs = int(input("Bond maturity years: "))
                             inv = Bond(name, amount, rate, yrs)
+                        
+                        else:
+                            print("Invalid investment type!")
+                            continue
 
-                        portfolio.add_investment(inv)
-                        print("Investment added successfully.")
+                        if inv is not None:
+                            portfolio.add_investment(inv)
+                            print("Investment added successfully.")
 
                     elif c == "2":
-                        portfolio.generate_report()
+                        if not portfolio.investments:
+                            print("No investments in portfolio yet!")
+                        else:
+                            portfolio.generate_report()
 
                     elif c == "3":
-                        best = find_best_investment(portfolio.investments)
-                        avg, risk = calculate_risk_and_return(portfolio.investments)
+                        if not portfolio.investments:
+                            print("No investments in portfolio yet!")
+                        else:
+                            best = find_best_investment(portfolio.investments)
+                            avg, risk = calculate_risk_and_return(portfolio.investments)
 
-                        print("Best Investment:", best.get_name())
-                        print("Average Return:", avg)
-                        print("Portfolio Risk:", risk)
+                            print("Best Investment:", best.get_name())
+                            print("Average Return:", avg)
+                            print("Portfolio Risk:", risk)
 
                     elif c == "4":
                         break

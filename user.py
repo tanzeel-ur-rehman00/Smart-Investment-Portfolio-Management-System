@@ -18,6 +18,7 @@ class User:
 
     def save_user(self):
         # Saves user credentials to a file for persistence
+        os.makedirs("data", exist_ok=True)
         with open("data/users.txt", "a") as f:
             f.write(f"{self.__username},{self.__password}\n")
 
